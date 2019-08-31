@@ -94,6 +94,27 @@ lazy val `jackson-backend` = project.in(file("./modules/jackson-backend"))
     )
   ).dependsOn(core)
 
+lazy val `jsoniter-scala` = project.in(file("./modules/jsoniter-scala"))
+  .settings(commonSettings)
+  .settings(
+    name := "tethys-jsoniter-scala",
+    libraryDependencies ++= Seq(
+      "com.github.plokhotnyuk.jsoniter-scala" %% "jsoniter-scala-core"   % "0.51.3" % Compile,
+      // todo: скорее всего макросы можно удалить
+      "com.github.plokhotnyuk.jsoniter-scala" %% "jsoniter-scala-macros" % "0.51.3" % Provided, // required only in compile-time
+
+      "org.scalatest" %% "scalatest" % scalaTestVersion % Test
+    )
+  ).dependsOn(core)
+
+lazy val `jsoniter-java` = project.in(file("./modules/jsoniter-java"))
+  .settings(commonSettings)
+  .settings(
+    name := "tethys-jsoniter-java",
+    libraryDependencies += "com.jsoniter" % "jsoniter" % "0.9.23"
+    
+  ).dependsOn(core)
+
 lazy val enumeratum = project.in(file("./modules/enumeratum"))
   .settings(commonSettings)
   .settings(
