@@ -3,7 +3,7 @@ package tethys.jsoniter_scala
 import com.github.plokhotnyuk.jsoniter_scala.core.{JsonReader, JsonReaderException}
 import tethys.commons.Token
 import tethys.commons.Token.{ArrayEndToken, ArrayStartToken, BooleanValueToken, FieldNameToken, NullValueToken, NumberValueToken, ObjectEndToken, ObjectStartToken, StringValueToken}
-import tethys.readers.tokens.BaseTokenIterator
+import tethys.readers.tokens.{BaseTokenIterator, TokenIterator}
 
 import scala.annotation.switch
 import scala.collection.mutable
@@ -69,5 +69,11 @@ final class JsoniterTokenIterator(jsonReader: JsonReader) extends BaseTokenItera
   private def popValue(token: Token): Token = {
     if (context.top == JsonContext.Field) context.pop()
     token
+  }
+}
+
+object JsoniterTokenIterator {
+  def fromFreshParser(parser: JsonReader): TokenIterator = {
+    new JsoniterTokenIterator(parser)
   }
 }
